@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemGenericNameController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
@@ -16,3 +17,6 @@ Route::post('post-registration', [AuthController::class, 'postRegistration'])->n
 Route::get('dashboard', [AuthController::class, 'dashboard']); 
 Route::get('/', [AuthController::class, 'dashboard']); 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::resource('item-generic-name', ItemGenericNameController::class);
