@@ -1,16 +1,9 @@
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel 11 Custom Dashboard - ItSolutionStuff.com</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  </head>
-<body>
-    
-<main>
-  <div class="container py-4">
+@extends('layouts.layout')
+   
+@section('content')
+@include('dashboard.accumulations')
+@include('dashboard.revenue')
+  <!-- <div class="container py-4">
     <header class="pb-3 mb-4 border-bottom">
         <div class="row">
             <div class="col-md-11">
@@ -48,8 +41,5 @@
       </div>
     </div>
 
-  </div>
-</main>
-
-</body>
-</html>
+  </div> -->
+@endsection

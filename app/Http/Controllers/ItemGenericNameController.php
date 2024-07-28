@@ -59,7 +59,7 @@ class ItemGenericNameController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ItemGenericName $itemGenericName):RedirectResponse
+    public function update(ItemGenericNameStoreRequest $request, ItemGenericName $itemGenericName):RedirectResponse
     {
         $itemGenericName->update($request->validated());
           
