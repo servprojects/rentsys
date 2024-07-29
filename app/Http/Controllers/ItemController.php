@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemStoreRequest;
 use App\Models\Item;
+use App\Models\ItemBrand;
+use App\Models\ItemCategory;
+use App\Models\ItemGenericName;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -12,13 +15,13 @@ class ItemController extends Controller
      * Display a listing of the resource.
      */
 
-
     public function index()
     {
-        $items = Item::latest()->paginate(5);
-          
-        return view('items.index', compact('items'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+        $items = Item::with(['itemGenericName', 'itemBrand', 'itemCategory'])
+            ->latest()
+            ->paginate(5);
+
+        return view('items.index', compact('items'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -26,7 +29,11 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create');
+        $itemGenericNames = ItemGenericName::all();
+        $itemBrands = ItemBrand::all();
+        $itemCategories = ItemCategory::all();
+
+        return view('items.create', compact('itemGenericNames', 'itemBrands', 'itemCategories'));
     }
 
     /**
@@ -35,9 +42,8 @@ class ItemController extends Controller
     public function store(ItemStoreRequest $request)
     {
         Item::create($request->validated());
-           
-        return redirect()->route('items.index')
-                         ->with('success', 'Item created successfully.');
+
+        return redirect()->route('items.index')->with('success', 'Item created successfully.');
     }
 
     /**
@@ -45,7 +51,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('items.show',compact('item'));
+        return view('items.show', compact('item'));
     }
 
     /**
@@ -53,7 +59,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        return view('items.edit',compact('item'));
+        return view('items.edit', compact('item'));
     }
 
     /**
@@ -62,9 +68,8 @@ class ItemController extends Controller
     public function update(ItemStoreRequest $request, Item $item)
     {
         $item->update($request->validated());
-          
-        return redirect()->route('items.index')
-                        ->with('success','Item updated successfully');
+
+        return redirect()->route('items.index')->with('success', 'Item updated successfully');
     }
 
     /**
@@ -73,8 +78,7 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         $item->delete();
-           
-        return redirect()->route('items.index')
-                        ->with('success','Item deleted successfully');
+
+        return redirect()->route('items.index')->with('success', 'Item deleted successfully');
     }
 }

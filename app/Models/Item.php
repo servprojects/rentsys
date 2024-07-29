@@ -17,4 +17,19 @@ class Item extends Model
         'details',
         'model',
     ];
+    
+    public function itemGenericName()
+    {
+        return $this->belongsTo(ItemGenericName::class, 'item_generic_name_id');
+    }
+
+    public function itemBrand()
+    {
+        return $this->belongsTo(ItemBrand::class, 'item_brand_id');
+    }
+
+    public function itemCategory()
+    {
+        return $this->belongsTo(ItemCategory::class, 'item_category_id');
+    }
 }
