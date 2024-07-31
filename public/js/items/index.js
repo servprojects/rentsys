@@ -76,7 +76,7 @@ function populateTable(items) {
                 <input type="radio" name="options" id="option1" autocomplete="off" > <i class="bi bi-eye-fill"></i>
             </label>
            
-            <label class="btn btn-secondary">
+            <label class="btn btn-secondary" onclick="openUrl('/items/${item.id}/edit')">
                 <input type="radio" name="options" id="option2" autocomplete="off"> <i class="bi bi-pencil-square"></i>
             </label>
             <label class="btn btn-secondary">

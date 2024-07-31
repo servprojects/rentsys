@@ -32,8 +32,10 @@ class ItemController extends Controller
         $itemGenericNames = ItemGenericName::all();
         $itemBrands = ItemBrand::all();
         $itemCategories = ItemCategory::all();
+        $transactionRoute = 'items.store';
+        $item = new Item();
 
-        return view('items.create', compact('itemGenericNames', 'itemBrands', 'itemCategories'));
+        return view('items.create', compact('itemGenericNames', 'itemBrands', 'itemCategories', 'transactionRoute', 'item'));
     }
 
     /**
@@ -59,7 +61,11 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        return view('items.edit', compact('item'));
+        $itemGenericNames = ItemGenericName::all();
+        $itemBrands = ItemBrand::all();
+        $itemCategories = ItemCategory::all();
+        $transactionRoute = 'items.update';
+        return view('items.create', compact('item', 'transactionRoute', 'itemGenericNames', 'itemBrands', 'itemCategories'));
     }
 
     /**

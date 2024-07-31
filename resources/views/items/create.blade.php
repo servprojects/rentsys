@@ -3,8 +3,13 @@
 @section('content')
     <div class="p-lg-5">
         <div class="card w-100 w-lg-50">
-            <form action="{{ route('items.store') }}" method="POST">
+            <form action="{{ $transactionRoute == "items.update" ? route($transactionRoute, $item->id) : route($transactionRoute) }}" method="POST">
                 @csrf
+                @if ($transactionRoute == "items.update")
+                   @method('PUT')
+                @endif
+  
+           
                 <div class="card-header">
                     ITEM FORM
                 </div>
@@ -15,7 +20,7 @@
                             <select name="item_generic_name_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemGenericNames as $ign)
-                                    <option value="{{ $ign->id }}">{{ $ign->name }}</option>
+                                    <option value="{{ $ign->id }}" {{ $item->item_generic_name_id == $ign->id ? 'selected' : '' }}>{{ $ign->name }}</option>
                                 @empty
                                     <option value="">No data</option>
                                 @endforelse
@@ -29,7 +34,7 @@
                             <select name="item_brand_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemBrands as $ib)
-                                    <option value="{{ $ib->id }}">{{ $ib->name }}</option>
+                                    <option value="{{ $ib->id }}" {{ $item->item_brand_id == $ib->id ? 'selected' : '' }}>{{ $ib->name }}</option>
                                 @empty
                                     <option value="">No data</option>
                                 @endforelse
@@ -44,7 +49,7 @@
                             <select name="item_category_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemCategories as $ic)
-                                    <option value="{{ $ic->id }}">{{ $ic->name }}</option>
+                                    <option value="{{ $ic->id }}" {{ $item->item_category_id == $ic->id ? 'selected' : '' }}>{{ $ic->name }}</option>
                                 @empty
                                     <option value="">No data</option>
                                 @endforelse
@@ -55,21 +60,21 @@
                         </div>
                         <div class="mb-3">
                             <label for="model" class="form-label">Model</label>
-                            <input type="text" name="model" class="form-control" id="model">
+                            <input type="text" value="{{ $item->model }}" name="model" class="form-control" id="model">
                             @error('model')
                                 <div class="form-text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <input type="text" name="description" class="form-control" id="description">
+                            <input type="text" value="{{ $item->description }}" name="description" class="form-control" id="description">
                             @error('description')
                                 <div class="form-text text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="details" class="form-label">Other Details</label>
-                            <textarea class="form-control" name="details" id="details" rows="3"></textarea>
+                            <textarea class="form-control" name="details" id="details" rows="3">{{ $item->details }}</textarea>
                             @error('details')
                                 <div class="form-text text-danger">{{ $message }}</div>
                             @enderror
@@ -78,7 +83,7 @@
                     </div>
                     <footer>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-secondary mr-2">Cancel</button>
+                            <a href="{{ route('items.index') }}"><button type="button" class="btn btn-secondary mr-2">Cancel</button></a>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </footer>
