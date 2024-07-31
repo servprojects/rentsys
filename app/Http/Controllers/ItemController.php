@@ -81,4 +81,36 @@ class ItemController extends Controller
 
         return redirect()->route('items.index')->with('success', 'Item deleted successfully');
     }
+
+    public function getAllData(Request $request)
+    {
+        // Fetch the search parameter from the request
+        $search = $request->input('search');
+
+        // Query the database with the search parameter
+        $query = Item::with(['itemGenericName', 'itemBrand', 'itemCategory']);
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('model', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhere('details', 'LIKE', "%{$search}%")
+                    ->orWhereHas('itemGenericName', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('itemBrand', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('itemCategory', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        $data = $query->paginate(2);
+
+        // Return data as JSON response
+        return response()->json($data);
+    }
 }

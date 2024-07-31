@@ -5,6 +5,17 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    protected $middlewareGroups = [
+        'api' => [
+            'throttle:60,1', // Limit to 60 requests per minute
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+    ];
+    
+    protected $middleware = [
+        \Fruitcake\Cors\HandleCors::class,
+          // ...
+      ];
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

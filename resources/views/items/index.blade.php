@@ -3,7 +3,24 @@
 @section('content')
 
     <div class="card mt-5">
-        <h2 class="card-header">Items</h2>
+        <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <h2 class="mb-0">Items</h2>
+            <div class="form-inline mt-2 mt-md-0">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-white border-0 small" placeholder="Search for..."
+                        aria-label="Search" aria-describedby="basic-addon2" id="search-input">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="search-button">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
         <div class="card-body">
 
             @session('success')
@@ -25,38 +42,44 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                {{-- <tbody id="items-tbody">
                     @forelse ($items as $ign)
                         <tr>
                             <td>{{ $ign->id }}</td>
                             <td>{{ $ign->itemCategory->name }}</td>
                             <td>{{ $ign->itemGenericName->name }} {{ $ign->itemBrand->name }} {{ $ign->model }}</td>
+                            <td></td>
 
-                            {{-- <td>{{ ++$i }}</td>
-                    <td>{{ $ign->name }}</td>
-                    <td>{{ $ign->details }}</td> --}}
-                            <td>
-                                {{-- <form action="{{ route('item-generic-name.destroy',$ign->id) }}" method="POST">
-             
-                            <a class="btn btn-info btn-sm" href="{{ route('item-generic-name.show',$ign->id) }}"><i class="fa-solid fa-list"></i> Show</a>
-              
-                            <a class="btn btn-primary btn-sm" href="{{ route('item-generic-name.edit',$ign->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-             
-                            @csrf
-                            @method('DELETE')
-                
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </form> --}}
-                            </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="4">There are no data.</td>
                         </tr>
                     @endforelse
+                </tbody> --}}
+                <tbody id="items-tbody">
+                    <tr>
+                        <td colspan="4">Loading...</td>
+                    </tr>
                 </tbody>
 
             </table>
+            <nav aria-label="...">
+                {{-- <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul> --}}
+                <ul class="pagination"></ul>
+            </nav>
 
             {!! $items->links() !!}
 
