@@ -108,7 +108,7 @@ class ItemController extends Controller
             });
         }
 
-        $data = $query->paginate(2);
+        $data = $query->paginate(10);
 
         // Return data as JSON response
         return response()->json($data);

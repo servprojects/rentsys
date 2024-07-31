@@ -37,6 +37,11 @@ async function fetchAllItems(searchValue,page = 1) {
     }
 }
 
+function openUrl(url) {
+    
+    window.location.replace(url);
+}
+
 function populateTable(items) {
     const tbody = document.getElementById('items-tbody');
     tbody.innerHTML = ''; // Clear existing rows
@@ -62,6 +67,28 @@ function populateTable(items) {
         tr.appendChild(tdDescription);
 
         const tdAction = document.createElement('td');
+
+        const htmlContent = `
+        <div class="text-center">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            
+            <label class="btn btn-secondary " onclick="openUrl('/items/${item.id}')">
+                <input type="radio" name="options" id="option1" autocomplete="off" > <i class="bi bi-eye-fill"></i>
+            </label>
+           
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> <i class="bi bi-pencil-square"></i>
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> <i class="bi bi-archive-fill"></i>
+            </label>
+            </div>
+            </div>
+            `;
+
+// Append the HTML content to tdAction
+tdAction.innerHTML = htmlContent;
+
         // Assuming actions buttons are added here
         tr.appendChild(tdAction);
 

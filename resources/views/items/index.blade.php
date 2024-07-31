@@ -36,8 +36,8 @@
                 <thead>
                     <tr>
                         <th width="80px">Code</th>
-                        <th>Item Name</th>
-                        <th>Descroption</th>
+                        <th>Category</th>
+                        <th>Description</th>
                         <th width="250px">Action</th>
                     </tr>
                 </thead>
@@ -86,3 +86,4 @@
         </div>
     </div>
 @endsection
+
