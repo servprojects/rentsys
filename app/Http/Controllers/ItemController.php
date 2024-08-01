@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemDisableRequest;
 use App\Http\Requests\ItemStoreRequest;
 use App\Models\Item;
 use App\Models\ItemBrand;
 use App\Models\ItemCategory;
 use App\Models\ItemGenericName;
 use Illuminate\Http\Request;
+use Log;
 
 class ItemController extends Controller
 {
@@ -77,7 +79,6 @@ class ItemController extends Controller
 
         return redirect()->route('items.index')->with('success', 'Item updated successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -88,12 +89,12 @@ class ItemController extends Controller
         return redirect()->route('items.index')->with('success', 'Item deleted successfully');
     }
 
+    // API methods //
+
     public function getAllData(Request $request)
     {
-        // Fetch the search parameter from the request
         $search = $request->input('search');
 
-        // Query the database with the search parameter
         $query = Item::with(['itemGenericName', 'itemBrand', 'itemCategory']);
 
         if ($search) {
@@ -119,4 +120,38 @@ class ItemController extends Controller
         // Return data as JSON response
         return response()->json($data);
     }
+
+    public function restDisable(ItemDisableRequest $request, Item $item)
+    {
+        try {
+            $validatedData = $request->validated();
+    
+            $dataToUpdate = array_filter(
+                $validatedData,
+                function ($value) {
+                    return $value !== null;
+                }
+            );
+    
+            $item->update($dataToUpdate);
+    
+        
+            return response()->json([
+                'success' => true,
+                'message' => 'Item updated successfully',
+                'item' => $item
+            ]);
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Error updating item: ' . $e->getMessage());
+    
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update item',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    
+
 }

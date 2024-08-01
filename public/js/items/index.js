@@ -13,7 +13,6 @@ document.getElementById("search-input").addEventListener("keydown", function(eve
 
 async function fetchAllItems(searchValue,page = 1) {
     
-    console.log('Search value:', searchValue);
     const response = await fetch(`/api/items/all?page=${page}`, {
         method: 'POST',
         credentials: 'include', // Include credentials (session cookies) if necessary
@@ -35,6 +34,45 @@ async function fetchAllItems(searchValue,page = 1) {
         console.error('Failed to fetch items');
         return null;
     }
+}
+
+async function updateItem(itemId, updateData) {
+    try {
+        const response = await fetch(`/api/items/update/${itemId}`, {
+            method: 'post',
+            credentials: 'include', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateData)
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }else{
+            location.reload();
+        }
+
+
+        const result = await response.json();
+
+    } catch (error) {
+        // Handle any errors that occurred during the fetch
+        console.error('Error updating item:', error);
+    }
+}
+
+async function deleteItem(itemId) {
+  
+    if(confirm("Are you sure you want to delete this item?")) { 
+            // Data to update
+        const updateData = {
+            deleted: true
+        };
+
+        // Call the function to update the item with ID 1
+        await updateItem(itemId, updateData);
+    }
+   
 }
 
 function openUrl(url) {
@@ -79,20 +117,25 @@ function populateTable(items) {
             <label class="btn btn-secondary" onclick="openUrl('/items/${item.id}/edit')">
                 <input type="radio" name="options" id="option2" autocomplete="off"> <i class="bi bi-pencil-square"></i>
             </label>
-            <label class="btn btn-secondary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> <i class="bi bi-archive-fill"></i>
+            <label class="btn btn-secondary" >
+                <input id="delete-${item.id}" type="radio" name="options" autocomplete="off"> <i class="bi bi-archive-fill"></i>
             </label>
             </div>
-            </div>
+        </div>
             `;
 
-// Append the HTML content to tdAction
-tdAction.innerHTML = htmlContent;
+        tdAction.innerHTML = htmlContent;
 
         // Assuming actions buttons are added here
         tr.appendChild(tdAction);
 
         tbody.appendChild(tr);
+
+        const deleteButton = tdAction.querySelector(`#delete-${item.id}`);
+        deleteButton.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent event bubbling
+            deleteItem(item.id);
+        });
     });
 }
 
