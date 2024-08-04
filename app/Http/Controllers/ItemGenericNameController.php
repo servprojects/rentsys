@@ -77,4 +77,25 @@ class ItemGenericNameController extends Controller
         return redirect()->route('item-generic-name.index')
                         ->with('success','Item Generic Name deleted successfully');
     }
+
+    // api
+    public function getAllData(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = ItemGenericName::latest();
+
+        if ($search) {
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('details', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->paginate(10);
+
+        // Return data as JSON response
+        return response()->json($data);
+    }
 }

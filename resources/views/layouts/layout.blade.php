@@ -237,7 +237,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                   @yield('content')
-                   
+                 
                 </div>
                 <!-- /.container-fluid -->
 
@@ -300,7 +300,8 @@
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
-    <script src="{{ asset('js/items/index.js') }}"></script>
+    <script src="{{ asset('js/general/general.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>

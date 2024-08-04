@@ -13,7 +13,7 @@ document.getElementById("search-input").addEventListener("keydown", function(eve
 
 async function fetchAllItems(searchValue,page = 1) {
     
-    const response = await fetch(`/api/items/all?page=${page}`, {
+    const response = await fetch(`/api/item-generic-name/all?page=${page}`, {
         method: 'POST',
         credentials: 'include', 
         headers: {
@@ -24,6 +24,7 @@ async function fetchAllItems(searchValue,page = 1) {
 
     if (response.ok) {
         const data = await response.json();
+        console.log(data);
         populateTable(data);
         populatePagination(data, fetchAllItems);
         return data;
@@ -50,19 +51,19 @@ function populateTable(items) {
         tr.appendChild(tdId);
 
         const tdItemName = document.createElement('td');
-        tdItemName.textContent = item.item_category.name;
+        tdItemName.textContent = item.name;
         tr.appendChild(tdItemName);
 
-        const tdDescription = document.createElement('td');
-        tdDescription.textContent = `${item.item_generic_name.name} ${item.item_brand.name} ${item.model}`;
-        tr.appendChild(tdDescription);
+        const tdItemDescription = document.createElement('td');
+        tdItemDescription.textContent = item.details;
+        tr.appendChild(tdItemDescription);
 
         const tdAction = document.createElement('td');
 
         var actionData = {
-            viewClick: `openUrl('/items/${item.id}')`,
-            editClick: `openUrl('/items/${item.id}/edit')`,
-            idSuffix: `item-${item.id}`,
+            viewClick: `openUrl('/item-generic-name/${item.id}')`,
+            editClick: `openUrl('/item-generic-name/${item.id}/edit')`,
+            idSuffix: `item-generic-name-${item.id}`,
             id: item.id,
             deleteClick: `removeItem('/api/items/update/${item.id}', ${item.id})`
         }
