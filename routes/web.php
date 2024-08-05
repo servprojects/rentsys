@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemGenericNameController;
@@ -23,5 +24,6 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::resource('item-generic-name', ItemGenericNameController::class);
     Route::resource('item-category', ItemCategoryController::class);
+    Route::resource('item-brand', ItemBrandController::class);
     Route::resource('items', ItemController::class);
 });

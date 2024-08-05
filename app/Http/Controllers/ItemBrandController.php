@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DisableRequest;
-use App\Http\Requests\ItemCategoryStoreRequest;
-use App\Models\ItemCategory;
+use App\Http\Requests\ItemBrandStoreRequest;
+use App\Models\ItemBrand;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Log;
 
-class ItemCategoryController extends Controller
+class ItemBrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index():View
     {
-        $itemCategory = ItemCategory::latest()->paginate(5);
+        $itemBrand = ItemBrand::latest()->paginate(5);
           
-        return view('itemCategory.index', compact('itemCategory'))
+        return view('itemBrand.index', compact('itemBrand'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -27,67 +28,65 @@ class ItemCategoryController extends Controller
      */
     public function create():View
     {
-        $transactionRoute = 'item-category.store';
-        return view('itemCategory.form',compact('transactionRoute'));
+        $transactionRoute = 'item-brand.store';
+        return view('itemBrand.form',compact('transactionRoute'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemCategoryStoreRequest $request):RedirectResponse
+    public function store(ItemBrandStoreRequest $request):RedirectResponse
     {
-        ItemCategory::create($request->validated());
+        ItemBrand::create($request->validated());
            
-        return redirect()->route('item-category.index')
-                         ->with('success', 'Item Category created successfully.');
+        return redirect()->route('item-brand.index')
+                         ->with('success', 'Item Brand created successfully.');
     }
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(ItemCategory $itemCategory):View
+    public function show(ItemBrand $itemBrand):View
     {
-        return view('itemCategory.show',compact('itemCategory'));
-    
+        return view('itemBrand.show',compact('itemBrand'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemCategory $itemCategory):View
+    public function edit(ItemBrand $itemBrand):View
     {
-        $transactionRoute = 'item-category.update';
-        return view('itemCategory.form',compact('itemCategory','transactionRoute' ));
+        $transactionRoute = 'item-brand.update';
+        return view('itemBrand.form',compact('itemBrand','transactionRoute' ));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemCategoryStoreRequest $request, ItemCategory $itemCategory):RedirectResponse
+    public function update(ItemBrandStoreRequest $request, ItemBrand $itemBrand)
     {
-        $itemCategory->update($request->validated());
+        $itemBrand->update($request->validated());
           
-        return redirect()->route('item-category.index')
-                        ->with('success','Item Category updated successfully');
+        return redirect()->route('item-brand.index')
+                        ->with('success','Item Brand updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemCategory $itemCategory)
+    public function destroy(ItemBrand $itemBrand)
     {
-        $itemCategory->delete();
+        $itemBrand->delete();
            
-        return redirect()->route('item-category.index')
-                        ->with('success','Item Category deleted successfully');
+        return redirect()->route('item-brand.index')
+                        ->with('success','Item Brand deleted successfully');
     }
 
     public function getAllData(Request $request)
     {
         $search = $request->input('search');
 
-        $query = ItemCategory::latest();
+        $query = ItemBrand::latest();
 
         if ($search) {
             $query->where(function ($query) use ($search) {
@@ -103,7 +102,7 @@ class ItemCategoryController extends Controller
         return response()->json($data);
     }
 
-    public function restDisable(DisableRequest $request, ItemCategory $item)
+    public function restDisable(DisableRequest $request, ItemBrand $item)
     {
         try {
             $validatedData = $request->validated();
@@ -134,6 +133,5 @@ class ItemCategoryController extends Controller
             ], 500);
         }
     }
-
 
 }

@@ -38,6 +38,7 @@
                         <h6 class="collapse-header">Item Management</h6>
                         <a class="collapse-item" href="{{ route('item-generic-name.index') }}">Generic Names</a>
                         <a class="collapse-item" href="{{ route('item-category.index') }}">Categories</a>
+                        <a class="collapse-item" href="{{ route('item-brand.index') }}">Brands</a>
                         <a class="collapse-item" href="{{ route('items.index') }}">Items</a>
                         <a class="collapse-item" href="#">Assets</a>
                     </div>

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemGenericNameController;
 use Illuminate\Support\Facades\Route;
@@ -14,5 +15,8 @@ use App\Http\Controllers\ItemController;
 
     Route::post('/item-category/all', [ItemCategoryController::class, 'getAllData']);
     Route::post('/item-category/remove/{item}', [ItemCategoryController::class, 'restDisable']);
+
+    Route::post('/item-brand/all', [ItemBrandController::class, 'getAllData']);
+    Route::post('/item-brand/remove/{item}', [ItemBrandController::class, 'restDisable']);
     // });
 // });
