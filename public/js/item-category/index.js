@@ -13,7 +13,7 @@ document.getElementById("search-input").addEventListener("keydown", function(eve
 
 async function fetchAllItems(searchValue,page = 1) {
     
-    const response = await fetch(`/api/item-generic-name/all?page=${page}`, {
+    const response = await fetch(`/api/item-category/all?page=${page}`, {
         method: 'POST',
         credentials: 'include', 
         headers: {
@@ -24,7 +24,7 @@ async function fetchAllItems(searchValue,page = 1) {
 
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
+       
         populateTable(data);
         populatePagination(data, fetchAllItems);
         return data;
@@ -61,11 +61,11 @@ function populateTable(items) {
         const tdAction = document.createElement('td');
 
         var actionData = {
-            viewClick: `openUrl('/item-generic-name/${item.id}')`,
-            editClick: `openUrl('/item-generic-name/${item.id}/edit')`,
-            idSuffix: `item-generic-name-${item.id}`,
+            viewClick: `openUrl('/item-category/${item.id}')`,
+            editClick: `openUrl('/item-category/${item.id}/edit')`,
+            idSuffix: `item-category-${item.id}`,
             id: item.id,
-            deleteClick: `removeItem('/api/item-generic-name/remove/${item.id}', ${item.id})`
+            deleteClick: `removeItem('/api/item-category/remove/${item.id}', ${item.id})`
         }
 
         tdAction.innerHTML = rowActions(actionData);

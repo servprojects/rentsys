@@ -16,6 +16,20 @@
                 <div class="card-body ">
                     <div>
                         <div class="mb-3">
+                            <label for="brand" class="form-label">Category</label>
+                            <select name="item_category_id" class="form-control">
+                                <option selected>Select</option>
+                                @forelse ($itemCategories as $ic)
+                                    <option value="{{ $ic->id }}" {{ $item->item_category_id == $ic->id ? 'selected' : '' }}>{{ $ic->name }}</option>
+                                @empty
+                                    <option value="">No data</option>
+                                @endforelse
+                            </select>
+                            @error('item_category_id')
+                                <div class="form-text text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="brand" class="form-label">Generic Name</label>
                             <select name="item_generic_name_id" class="form-control">
                                 <option selected>Select</option>
@@ -43,20 +57,6 @@
                                 <div class="form-text text-danger">{{ $message }}</div>
                             @enderror
 
-                        </div>
-                        <div class="mb-3">
-                            <label for="brand" class="form-label">Category</label>
-                            <select name="item_category_id" class="form-control">
-                                <option selected>Select</option>
-                                @forelse ($itemCategories as $ic)
-                                    <option value="{{ $ic->id }}" {{ $item->item_category_id == $ic->id ? 'selected' : '' }}>{{ $ic->name }}</option>
-                                @empty
-                                    <option value="">No data</option>
-                                @endforelse
-                            </select>
-                            @error('item_category_id')
-                                <div class="form-text text-danger">{{ $message }}</div>
-                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="model" class="form-label">Model</label>

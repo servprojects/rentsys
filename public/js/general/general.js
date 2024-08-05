@@ -132,7 +132,6 @@ async function updateItem(id, updateData, removeApi) {
             location.reload();
         }
 
-
         const result = await response.json();
 
     } catch (error) {

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItemCategroyStoreRequest extends FormRequest
+class DisableRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class ItemCategroyStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'details' => 'required'
+            'deleted' => 'boolean',
         ];
     }
 }

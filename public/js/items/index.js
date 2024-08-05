@@ -50,11 +50,11 @@ function populateTable(items) {
         tr.appendChild(tdId);
 
         const tdItemName = document.createElement('td');
-        tdItemName.textContent = item.item_category.name;
+        tdItemName.textContent = item.item_category ? item.item_category.name : "";
         tr.appendChild(tdItemName);
 
         const tdDescription = document.createElement('td');
-        tdDescription.textContent = `${item.item_generic_name.name} ${item.item_brand.name} ${item.model}`;
+        tdDescription.textContent = `${item.item_generic_name ? item.item_generic_name.name : ''} ${item.item_brand ? item.item_brand.name: ''} ${item.model}`;
         tr.appendChild(tdDescription);
 
         const tdAction = document.createElement('td');
@@ -64,7 +64,7 @@ function populateTable(items) {
             editClick: `openUrl('/items/${item.id}/edit')`,
             idSuffix: `item-${item.id}`,
             id: item.id,
-            deleteClick: `removeItem('/api/items/update/${item.id}', ${item.id})`
+            deleteClick: `removeItem('/api/items/remove/${item.id}', ${item.id})`
         }
 
         tdAction.innerHTML = rowActions(actionData);

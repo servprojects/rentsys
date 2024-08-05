@@ -37,7 +37,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Item Management</h6>
                         <a class="collapse-item" href="{{ route('item-generic-name.index') }}">Generic Names</a>
-                        <a class="collapse-item" href="#">Categories</a>
+                        <a class="collapse-item" href="{{ route('item-category.index') }}">Categories</a>
                         <a class="collapse-item" href="{{ route('items.index') }}">Items</a>
                         <a class="collapse-item" href="#">Assets</a>
                     </div>

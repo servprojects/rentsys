@@ -3,23 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DisableRequest;
-use App\Http\Requests\ItemGenericNameStoreRequest;
-use App\Models\ItemGenericName;
+use App\Http\Requests\ItemCategoryStoreRequest;
+use App\Models\ItemCategory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Log;
 
-class ItemGenericNameController extends Controller
+class ItemCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index():View
     {
-        $itemGenericName = ItemGenericName::latest()->paginate(5);
+        $itemCategory = ItemCategory::latest()->paginate(5);
           
-        return view('itemGenericName.index', compact('itemGenericName'))
+        return view('itemCategory.index', compact('itemCategory'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -28,66 +27,67 @@ class ItemGenericNameController extends Controller
      */
     public function create():View
     {
-        $transactionRoute = 'item-generic-name.store';
-        return view('itemGenericName.form',compact('transactionRoute'));
+        $transactionRoute = 'item-category.store';
+        return view('itemCategory.form',compact('transactionRoute'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ItemGenericNameStoreRequest $request):RedirectResponse
+    public function store(ItemCategoryStoreRequest $request):RedirectResponse
     {
-        ItemGenericName::create($request->validated());
+        ItemCategory::create($request->validated());
            
-        return redirect()->route('item-generic-name.index')
-                         ->with('success', 'Item Generic Name created successfully.');
+        return redirect()->route('item-category.index')
+                         ->with('success', 'Item Category created successfully.');
     }
+    
 
     /**
      * Display the specified resource.
      */
-    public function show(ItemGenericName $itemGenericName):View
+    public function show(ItemCategory $itemCategory):View
     {
-        return view('itemGenericName.show',compact('itemGenericName'));
+        return view('itemCategory.show',compact('itemCategory'));
+    
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ItemGenericName $itemGenericName):View
+    public function edit(ItemCategory $itemCategory):View
     {
-        $transactionRoute = 'item-generic-name.update';
-        return view('itemGenericName.form',compact('itemGenericName','transactionRoute' ));
+        $transactionRoute = 'item-category.update';
+        return view('itemCategory.form',compact('itemCategory','transactionRoute' ));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ItemGenericNameStoreRequest $request, ItemGenericName $itemGenericName):RedirectResponse
+    public function update(ItemCategoryStoreRequest $request, ItemCategory $itemCategory):RedirectResponse
     {
-        $itemGenericName->update($request->validated());
+        $itemCategory->update($request->validated());
           
-        return redirect()->route('item-generic-name.index')
+        return redirect()->route('item-category.index')
                         ->with('success','Item Generic Name updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemGenericName $itemGenericName)
+    public function destroy(ItemCategory $itemCategory)
     {
-        $itemGenericName->delete();
+        $itemCategory->delete();
            
-        return redirect()->route('item-generic-name.index')
+        return redirect()->route('item-category.index')
                         ->with('success','Item Generic Name deleted successfully');
     }
 
-    // api
     public function getAllData(Request $request)
     {
         $search = $request->input('search');
 
-        $query = ItemGenericName::latest();
+        $query = ItemCategory::latest();
 
         if ($search) {
             $query->where(function ($query) use ($search) {
@@ -103,7 +103,7 @@ class ItemGenericNameController extends Controller
         return response()->json($data);
     }
 
-    public function restDisable(DisableRequest $request, ItemGenericName $item)
+    public function restDisable(DisableRequest $request, ItemCategory $item)
     {
         try {
             $validatedData = $request->validated();
@@ -134,4 +134,6 @@ class ItemGenericNameController extends Controller
             ], 500);
         }
     }
+
+
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItemDisableRequest;
+use App\Http\Requests\DisableRequest;
 use App\Http\Requests\ItemStoreRequest;
 use App\Models\Item;
 use App\Models\ItemBrand;
@@ -121,7 +121,7 @@ class ItemController extends Controller
         return response()->json($data);
     }
 
-    public function restDisable(ItemDisableRequest $request, Item $item)
+    public function restDisable(DisableRequest $request, Item $item)
     {
         try {
             $validatedData = $request->validated();
