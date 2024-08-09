@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemGenericNameController;
+use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
@@ -26,4 +28,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('item-category', ItemCategoryController::class);
     Route::resource('item-brand', ItemBrandController::class);
     Route::resource('items', ItemController::class);
+    Route::resource('assets', AssetController::class);
+    Route::resource('rentals', RentalController::class);
 });

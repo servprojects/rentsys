@@ -40,7 +40,7 @@
                         <a class="collapse-item" href="{{ route('item-category.index') }}">Categories</a>
                         <a class="collapse-item" href="{{ route('item-brand.index') }}">Brands</a>
                         <a class="collapse-item" href="{{ route('items.index') }}">Items</a>
-                        <a class="collapse-item" href="#">Assets</a>
+                        <a class="collapse-item" href="{{ route('assets.index') }}">Assets</a>
                     </div>
                 </div>
             </li>
@@ -50,16 +50,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Individual</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">People Management:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Users</a>
+                        <a class="collapse-item" href="utilities-border.html">Clients</a>
+                        <a class="collapse-item" href="utilities-animation.html">Investors</a>
+                
                     </div>
                 </div>
             </li>
@@ -69,15 +69,15 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                TRABSACTONS
+                TRANSACTONS
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>New Rental</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -91,20 +91,25 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('rentals.index') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>New Rental</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
+         
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                REPORTS
+            </div>
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Rentals</span></a>
             </li>
 
             <!-- Divider -->
@@ -114,6 +119,7 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
 
            
 

@@ -29,7 +29,8 @@ class ItemGenericNameController extends Controller
     public function create():View
     {
         $transactionRoute = 'item-generic-name.store';
-        return view('itemGenericName.form',compact('transactionRoute'));
+        $itemGenericName = new ItemGenericName();
+        return view('itemGenericName.form',compact('transactionRoute', 'itemGenericName'));
     }
 
     /**

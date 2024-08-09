@@ -100,10 +100,10 @@ function rowActions(data){
 return htmlContent;
 }
 
-function tableNoData(){
+function tableNoData(span=4){
     const htmlContent = `
     <tr>
-        <td colspan="4" class="text-center">No data found</td>
+        <td colspan="${span}" class="text-center">No data found</td>
     </tr>
     `;
 

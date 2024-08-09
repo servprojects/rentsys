@@ -17,7 +17,7 @@
                     <div>
                         <div class="mb-3">
                             <label for="brand" class="form-label">Category</label>
-                            <select name="item_category_id" class="form-control">
+                            <select name="item_category_id" id="item_category_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemCategories as $ic)
                                     <option value="{{ $ic->id }}" {{ $item->item_category_id == $ic->id ? 'selected' : '' }}>{{ $ic->name }}</option>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="brand" class="form-label">Generic Name</label>
-                            <select name="item_generic_name_id" class="form-control">
+                            <select name="item_generic_name_id" id="item_generic_name_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemGenericNames as $ign)
                                     <option value="{{ $ign->id }}" {{ $item->item_generic_name_id == $ign->id ? 'selected' : '' }}>{{ $ign->name }}</option>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="brand" class="form-label">Brand</label>
-                            <select name="item_brand_id" class="form-control">
+                            <select name="item_brand_id" id="item_brand_id" class="form-control">
                                 <option selected>Select</option>
                                 @forelse ($itemBrands as $ib)
                                     <option value="{{ $ib->id }}" {{ $item->item_brand_id == $ib->id ? 'selected' : '' }}>{{ $ib->name }}</option>
@@ -92,3 +92,8 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('js/items/form.js') }}"></script>
+@endsection
+

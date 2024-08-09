@@ -1,16 +1,13 @@
 @extends('layouts.layout')
 
 @section('content')
-    @include('components.master-data', [
-        'dataTitle' => 'Items',
-        'createRoute' => route('items.create'),
-        'headerItems' => [
-            ['width' => '80px', 'title' => 'Code'],
-            ['width' => '', 'title' => 'Category'],
-            ['width' => '', 'title' => 'Description'],
-            ['width' => '250px', 'title' => 'Action'],
-        ],
-    ])
+
+    <x-master-data :dataTitle="'Items'" :createRoute="route('items.create')" :headerItems="[
+        ['width' => '80px', 'title' => 'Code'],
+        ['width' => '', 'title' => 'Category'],
+        ['width' => '', 'title' => 'Description'],
+        ['width' => '250px', 'title' => 'Action'],
+    ]" :loadingSpan="4" />
 
     {!! $items->links() !!}
 @endsection

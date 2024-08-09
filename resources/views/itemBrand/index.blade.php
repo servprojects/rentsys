@@ -1,20 +1,14 @@
 @extends('layouts.layout')
-   
-@section('content')
 
-@include('components.master-data', [
-    'dataTitle' => 'Item Brand',
-    'createRoute' => route('item-brand.create'),
-    'headerItems' => [
+@section('content')
+    <x-master-data :dataTitle="'Item Brand'" :createRoute="route('item-brand.create')" :headerItems="[
         ['width' => '80px', 'title' => 'No'],
         ['width' => '', 'title' => 'Name'],
         ['width' => '', 'title' => 'Details'],
         ['width' => '250px', 'title' => 'Action'],
-    ]
-])
+    ]" :loadingSpan="4" />
 
-{!! $itemBrand->links() !!}
-
+    {!! $itemBrand->links() !!}
 @endsection
 
 @section('scripts')
