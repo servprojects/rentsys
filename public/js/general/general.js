@@ -99,7 +99,33 @@ function rowActions(data){
 
 return htmlContent;
 }
+function tableLoader(){
+    const htmlContent = `
+         <div class="d-flex justify-content-center align-items-center">
+            <div class="spinner-grow spinner-grow-md" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    `;
 
+    const tbody = document.getElementById('items-tbody');
+    tbody.innerHTML = ''; // Clear existing rows
+
+    // Calculate the number of columns
+    const table = document.querySelector('table'); // Assuming there's only one table, or select the specific table if needed
+    const columnCount = table.querySelectorAll('thead th').length; // Count the number of columns in the header
+
+    // Create a new row and cell
+    const tr = document.createElement('tr');
+    const tdId = document.createElement('td');
+    tdId.innerHTML = htmlContent;
+    tdId.setAttribute('colspan', columnCount); // Set colspan to the number of columns
+
+    // Append the cell to the row and the row to the tbody
+    tr.appendChild(tdId);
+    tbody.appendChild(tr);
+   
+}
 function tableNoData(span=4){
     const htmlContent = `
     <tr>
@@ -125,6 +151,7 @@ async function updateItem(id, updateData, removeApi) {
             },
             body: JSON.stringify(updateData)
         });
+      
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }else{
@@ -159,7 +186,7 @@ function removeLoader(id, type) {
 
     const iconElement = document.getElementById(`icon-${id}`);
     const spinnerElement = document.getElementById(`spinner-${id}`);
-    console.log(iconElement);
+    
 
     if(type == "start"){
         iconElement.classList.add('d-none');

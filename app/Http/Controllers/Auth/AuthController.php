@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
   
 use App\Http\Controllers\Controller;
+use App\Models\Rental;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -83,7 +85,19 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('dashboard.index');
+            $today = Carbon::today();
+            $tomorrow = Carbon::tomorrow();
+    
+            // Today's pickups and returns
+            $todaysPickups = Rental::whereDate('expected_pickup_datetime', $today)->count();
+            $todaysReturns = Rental::whereDate('expected_return_datetime', $today)->count();
+    
+            // Tomorrow's pickups and returns
+            $tomorrowsPickups = Rental::whereDate('expected_pickup_datetime', $tomorrow)->count();
+            $tomorrowsReturns = Rental::whereDate('expected_return_datetime', $tomorrow)->count();
+    
+    
+            return view('dashboard.index', compact('todaysPickups', 'todaysReturns', 'tomorrowsPickups', 'tomorrowsReturns'));
         }
   
         return redirect("login")->withSuccess('Opps! You do not have access');

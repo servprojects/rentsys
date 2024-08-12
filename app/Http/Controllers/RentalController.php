@@ -8,8 +8,10 @@ use App\Http\Requests\RentalStoreRequest;
 use App\Models\Asset;
 use App\Models\Item;
 use App\Models\Rental;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class RentalController extends Controller
@@ -17,67 +19,62 @@ class RentalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():View
+    public function index(): View
     {
         $assets = Asset::all();
         $rentals = Rental::latest()->paginate(5);
-          
-        return view('rentals.index', compact('rentals', 'assets'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+
+        return view('rentals.index', compact('rentals', 'assets'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create():View
+    public function create(): View
     {
         $assets = Asset::all();
         $transactionRoute = 'rentals.store';
         $rental = new Rental();
 
-        return view('rentals.form',compact('transactionRoute', 'assets', 'rental'));
+        return view('rentals.form', compact('transactionRoute', 'assets', 'rental'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RentalStoreRequest $request):RedirectResponse
+    public function store(RentalStoreRequest $request): RedirectResponse
     {
         Rental::create($request->validated());
-           
-        return redirect()->route('rentals.index')
-                         ->with('success', 'Rental created successfully.');
+
+        return redirect()->route('rentals.index')->with('success', 'Rental created successfully.');
     }
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(Rental $rental):View
+    public function show(Rental $rental): View
     {
-        return view('rentals.show',compact('rental'));
-    
+        return view('rentals.show', compact('rental'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Rental $rental):View
+    public function edit(Rental $rental): View
     {
         $transactionRoute = 'rentals.update';
         $assets = Asset::all();
-        return view('rentals.form',compact('rental','transactionRoute', 'assets' ));
+        return view('rentals.form', compact('rental', 'transactionRoute', 'assets'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(RentalStoreRequest $request, Rental $rental):RedirectResponse
+    public function update(RentalStoreRequest $request, Rental $rental): RedirectResponse
     {
         $rental->update($request->validated());
-          
-        return redirect()->route('rentals.index')
-                        ->with('success','Rental updated successfully');
+
+        return redirect()->route('rentals.index')->with('success', 'Rental updated successfully');
     }
 
     /**
@@ -86,22 +83,20 @@ class RentalController extends Controller
     public function destroy(Rental $rental)
     {
         $rental->delete();
-           
-        return redirect()->route('rentals.index')
-                        ->with('success','Rental deleted successfully');
+
+        return redirect()->route('rentals.index')->with('success', 'Rental deleted successfully');
     }
 
     public function getAllData(Request $request)
     {
         $search = $request->input('search');
         $assetId = $request->input('asset_id');
-       
+
         $convertAssetId = null; // Initialize $convertAssetId with null or 0, depending on your needs
 
         if ($assetId) {
             $convertAssetId = (int) $assetId;
         }
-
 
         $query = Rental::with(['asset', 'asset.item']);
 
@@ -111,14 +106,13 @@ class RentalController extends Controller
                 if ($convertAssetId) {
                     $query->where('asset_id', $convertAssetId);
                 }
-        
+
                 // Apply search filters
                 if ($search) {
                     $query->where(function ($query) use ($search) {
-                        $query->where('client', 'LIKE', "%{$search}%")
-                              ->orWhereHas('asset.item', function ($query) use ($search) {
-                                  $query->where('description', 'LIKE', "%{$search}%");
-                              });
+                        $query->where('client', 'LIKE', "%{$search}%")->orWhereHas('asset.item', function ($query) use ($search) {
+                            $query->where('description', 'LIKE', "%{$search}%");
+                        });
                     });
                 }
             });
@@ -135,37 +129,35 @@ class RentalController extends Controller
     {
         try {
             $validatedData = $request->validated();
-    
-            $dataToUpdate = array_filter(
-                $validatedData,
-                function ($value) {
-                    return $value !== null;
-                }
-            );
-    
+
+            $dataToUpdate = array_filter($validatedData, function ($value) {
+                return $value !== null;
+            });
+
             $rental->update($dataToUpdate);
-    
-        
+
             return response()->json([
                 'success' => true,
                 'message' => 'Rental updated successfully',
-                'item' => $rental
+                'item' => $rental,
             ]);
         } catch (\Exception $e) {
             // Log the error message
             Log::error('Error updating item: ' . $e->getMessage());
-    
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update item',
-                'error' => $e->getMessage(),
-            ], 500);
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Failed to update item',
+                    'error' => $e->getMessage(),
+                ],
+                500,
+            );
         }
     }
 
     public function getConflicts(Request $request)
     {
-
         // Retrieve the validated data
         $expectedPickup = $request->input('expected_pickup_datetime');
         $expectedReturn = $request->input('expected_return_datetime');
@@ -174,20 +166,84 @@ class RentalController extends Controller
         // Query to find conflicting rentals
         $conflictingRentals = Rental::where('asset_id', $assetId)
             ->where(function ($query) use ($expectedPickup, $expectedReturn) {
-                $query->where(function ($query) use ($expectedPickup, $expectedReturn) {
-                    $query->where('expected_pickup_datetime', '<=', $expectedReturn)
-                          ->where('expected_return_datetime', '>=', $expectedPickup);
-                })
-                ->orWhere(function ($query) use ($expectedPickup, $expectedReturn) {
-                    $query->where('actual_pickup_datetime', '<=', $expectedReturn)
-                          ->where('actual_return_datetime', '>=', $expectedPickup);
-                });
+                $query
+                    ->where(function ($query) use ($expectedPickup, $expectedReturn) {
+                        $query->where('expected_pickup_datetime', '<=', $expectedReturn)->where('expected_return_datetime', '>=', $expectedPickup);
+                    })
+                    ->orWhere(function ($query) use ($expectedPickup, $expectedReturn) {
+                        $query->where('actual_pickup_datetime', '<=', $expectedReturn)->where('actual_return_datetime', '>=', $expectedPickup);
+                    });
             })
             ->where('deleted', false) // Optionally filter out deleted rentals
             ->get();
 
         return response()->json($conflictingRentals);
     }
+    public function getMonthlyCounts()
+    {
+        $year = Carbon::now()->year;
+        $monthlyCounts = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $monthName = Carbon::create()->month($month)->format('F');
+            $count = Rental::whereYear('expected_pickup_datetime', $year)->whereMonth('expected_pickup_datetime', $month)->count();
+
+            $monthlyCounts[] = [
+                'month' => $monthName,
+                'count' => $count,
+            ];
+        }
+
+        return response()->json($monthlyCounts);
+    }
+
+   public function getCategoryCounts()
+{
+    $year = Carbon::now()->year;
+
+    $categoryCounts = Rental::whereYear('expected_pickup_datetime', $year)
+        ->where('deleted', '!=', 1) // Only check rentals for deletion
+        ->with(['asset.item.itemCategory' => function ($query) {
+            $query->where('deleted', '!=', 1); // Ensure categories are not deleted
+        }])
+        ->get()
+        ->flatMap(function ($rental) {
+            return $rental->asset->item->itemCategory ? [
+                $rental->asset->item->itemCategory->name => $rental->id
+            ] : [];
+        })
+        ->countBy()
+        ->map(function ($count, $category) {
+            return [
+                'category' => $category,
+                'count' => $count
+            ];
+        });
+
+    return response()->json($categoryCounts->values());
+}
+
+public function getAdsCounts()
+{
+    $year = Carbon::now()->year;
+
+    $adsCounts = Rental::whereYear('expected_pickup_datetime', $year)
+        ->where('deleted', '!=', 1) // Only check rentals for deletion
+        ->select(
+            DB::raw('
+                SUM(CASE WHEN is_from_ads = 1 THEN 1 ELSE 0 END) as ads_count,
+                SUM(CASE WHEN is_from_ads = 0 THEN 1 ELSE 0 END) as non_ads_count
+            ')
+        )
+        ->first();
+
+    return response()->json([
+        'ads_count' => $adsCounts->ads_count,
+        'non_ads_count' => $adsCounts->non_ads_count,
+    ]);
+}
 
 
+
+    
 }

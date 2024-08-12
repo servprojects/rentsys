@@ -19,6 +19,7 @@ assetSelect.addEventListener('change',
     fetchAllItems(document.getElementById('search-input').value, 1)});
 
 async function fetchAllItems(searchValue,page = 1) {
+    tableLoader();
     const assetSelect =document.getElementById('asset_id');
     var payload = { search: searchValue, asset_id: null };
     if(assetSelect.value != '0'){
@@ -60,7 +61,7 @@ function populateTable(rentals) {
     var colorTextWBG = '#ffffff';
 
     if (rentals.data.length === 0) {
-        tbody.innerHTML = tableNoData(5);
+        tbody.innerHTML = tableNoData(6);
         return;
     }
 
@@ -98,7 +99,7 @@ function populateTable(rentals) {
         const returnformattedDate = returndate.toLocaleDateString('en-US', options);
         const returnformattedTime = returndate.toLocaleTimeString('en-US', timeOptions);
         tdRn.textContent = `${returnformattedDate} - ${returnformattedTime}`;
-        const returnDateOnly = pickupdate.toISOString().split('T')[0];
+        const returnDateOnly = returndate.toISOString().split('T')[0];
         if (returnDateOnly === todayOnly) {
             tdRn.style.backgroundColor = todayBGColor;
             tdRn.style.color = colorTextWBG;

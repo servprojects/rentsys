@@ -14,3 +14,4 @@
 @section('scripts')
     <script src="{{ asset('js/assets/index.js') }}"></script>
 @endsection
+

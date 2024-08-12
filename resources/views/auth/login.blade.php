@@ -21,10 +21,12 @@
           <div class="card-body p-3 p-md-4 p-xl-5">
             <div class="text-center mb-3">
               <a href="#!">
-                <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=608,fit=crop,q=95/AR0l2bza3ziJkDGZ/logo-name-mjELQyj2wkc7pg19.png" alt="BootstrapBrain Logo" width="250">
+                
+                {{-- https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=608,fit=crop,q=95/AR0l2bza3ziJkDGZ/logo-name-mjELQyj2wkc7pg19.png --}}
+                <img src="{{ asset('img/rensys.png') }}" alt="BootstrapBrain Logo" width="200">
               </a>
             </div>
-            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">SIGN IN TO RENSYS</h2>
+            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">SIGN IN</h2>
             <form method="POST" action="{{ route('login.post') }}">
               @csrf
 

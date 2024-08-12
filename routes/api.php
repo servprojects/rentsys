@@ -25,7 +25,10 @@ use App\Http\Controllers\ItemController;
     Route::post('/assets/remove/{item}', [AssetController::class, 'restDisable']);
 
     Route::post('/rentals/all', [RentalController::class, 'getAllData']);
-    Route::post('/rentals/remove/{item}', [RentalController::class, 'restDisable']);
+    Route::post('/rentals/remove/{rental}', [RentalController::class, 'restDisable']);
     Route::post('/rentals/conflicts', [RentalController::class, 'getConflicts']);
+    Route::get('/rentals/getmonthlycounts', [RentalController::class, 'getMonthlyCounts']);
+    Route::get('/rentals/getcategorycounts', [RentalController::class, 'getCategoryCounts']);
+    Route::get('/rentals/getadscounts', [RentalController::class, 'getAdsCounts']);
     // });
 // });

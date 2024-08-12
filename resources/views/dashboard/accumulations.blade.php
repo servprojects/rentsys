@@ -9,7 +9,7 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                         Today's Rental</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">25</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$todaysPickups}}</div>
                 </div>
                 <div class="col-auto">
                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -27,10 +27,10 @@
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                         Today's Returns</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$todaysReturns}}</div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    <i class="fas fa-reply fa-2x text-gray-300"></i>
                 </div>
             </div>
         </div>
@@ -47,19 +47,19 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">3</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$tomorrowsPickups}}</div>
                         </div>
-                        <div class="col">
+                        {{-- <div class="col">
                             <div class="progress progress-sm mr-2">
                                 <div class="progress-bar bg-info" role="progressbar"
                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0"
                                     aria-valuemax="100"></div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    <i class="fas  fa-calendar fa-2x text-gray-300"></i>
                 </div>
             </div>
         </div>
@@ -73,11 +73,11 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                        Tommorrow's Returns</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                        Tomorrow's Returns</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{$tomorrowsReturns}}</div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    <i class="fas  fa-reply fa-2x text-gray-300"></i>
                 </div>
             </div>
         </div>
