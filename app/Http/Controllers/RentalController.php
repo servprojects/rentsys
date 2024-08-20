@@ -243,6 +243,52 @@ public function getAdsCounts()
     ]);
 }
 
+public function getAvailableAssets(Request $request)
+{
+   // Use the current date if no specific date is provided
+   $date = Carbon::parse($request->input('date', Carbon::now()->toDateString()));
+
+   // Set the end date to the end of the next day
+   $endDate = $date->copy()->addDay()->endOfDay();
+
+   // Query to get all asset_ids that are not available between the specified date and the end of the next day
+   $unavailableAssetIds = Rental::where(function($query) use ($date, $endDate) {
+       $query->where(function($subQuery) use ($date, $endDate) {
+           $subQuery->where('expected_pickup_datetime', '<=', $endDate)
+                    ->where('expected_return_datetime', '>=', $date);
+       });
+   })->pluck('asset_id');
+
+   // Query to get all item descriptions concatenated with asset codes that are available during the specified period
+   $availableItemDescriptions = Asset::whereNotIn('id', $unavailableAssetIds)
+                                     ->where('deleted', false)
+                                     ->with('item:id,description')
+                                     ->get()
+                                     ->map(function ($asset) {
+                                         return $asset->item->description . ' (' . $asset->code . ')';
+                                     });
+
+   return response()->json($availableItemDescriptions);
+}
+// public function getAvailableAssets(Request $request)
+// {
+//     // Use the current date if no specific date is provided
+//     $date = $request->input('date', Carbon::now()->toDateString());
+
+//     // Query to get all asset_ids that are not available on the specified date
+//     $unavailableAssetIds = Rental::where(function($query) use ($date) {
+//         $query->where('expected_pickup_datetime', '<=', $date)
+//               ->where('expected_return_datetime', '>=', $date);
+//     })->pluck('asset_id');
+
+//     // Query to get all asset_ids that are available on the specified date
+//     $availableAssets = Rental::whereNotIn('asset_id', $unavailableAssetIds)
+//                              ->where('deleted', false)
+//                              ->pluck('asset_id');
+
+//     return response()->json($availableAssets);
+// }
+
 
 
     

@@ -4,7 +4,7 @@
         <div class="form-inline mt-2 mt-md-0">
 
             @isset($otherActions)
-              <div class="mr-2" >  {{ $otherActions }}</div>
+                <div class="mr-2"> {{ $otherActions }}</div>
             @endisset
             <div class="input-group">
                 <input type="text" class="form-control bg-white border-0 small" placeholder="Search for..."
@@ -32,7 +32,7 @@
             <a class="btn btn-success btn-sm" href="{{ $createRoute }}"> <i class="fa fa-plus"></i> Create New</a>
         </div>
 
-        <table class="table table-bordered table-striped mt-4">
+        {{-- <table class="table table-bordered table-striped mt-4">
             <thead>
                 <tr>
                     @foreach ($headerItems as $item)
@@ -46,6 +46,20 @@
                 </tr>
             </tbody>
 
+        </table> --}}
+        <table class="table table-bordered table-striped table-sm mt-4">
+            <thead>
+                <tr>
+                    @foreach ($headerItems as $item)
+                        <th class="text-nowrap p-2" width="{{ $item['width'] }}">{{ $item['title'] }}</th>
+                    @endforeach
+                </tr>
+            </thead>
+            <tbody id="items-tbody">
+                <tr>
+                    <td colspan="{{ $loadingSpan ?? '4' }}">Loading...</td>
+                </tr>
+            </tbody>
         </table>
         <nav aria-label="...">
             <ul class="pagination"></ul>

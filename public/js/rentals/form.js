@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 asset_id: assetId
             })
         });
-        console.log(response);
+      
         if (response.ok) {
             const data = await response.json();
             console.log(data); // Handle the data as needed

@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon ">
                     {{-- <i class="fas fa-laugh-wink"></i> --}}
                     <img src="{{ asset('img/rensys-icon.svg') }}" alt="BootstrapBrain Logo" width="50">
@@ -42,6 +42,18 @@
                         <a class="collapse-item" href="{{ route('item-brand.index') }}">Brands</a>
                         <a class="collapse-item" href="{{ route('items.index') }}">Items</a>
                         <a class="collapse-item" href="{{ route('assets.index') }}">Assets</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                    aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Marketing</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('lead-source.index') }}">Lead Sources</a>
                     </div>
                 </div>
             </li>

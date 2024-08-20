@@ -5,7 +5,9 @@ use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemGenericNameController;
+use App\Http\Controllers\LeadSourceController;
 use App\Http\Controllers\RentalController;
+use App\Models\LeadSource;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
@@ -30,4 +32,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('items', ItemController::class);
     Route::resource('assets', AssetController::class);
     Route::resource('rentals', RentalController::class);
+    Route::resource('lead-source', LeadSourceController::class);
 });

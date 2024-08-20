@@ -1,5 +1,42 @@
 getMonthlyCounts();
 getAdsNon();
+getAvailableAssets();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const datePicker = document.getElementById('date-picker');
+    const availableDateText = document.getElementById('available-date');
+
+    function updateDateText(date) {
+        const today = new Date();
+        const selectedDate = new Date(date);
+        
+        // Format the selected date to 'AUGUST 1, 2024'
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = selectedDate.toLocaleDateString('en-US', options).toUpperCase();
+
+        // Compare the selected date with the current date
+        if (
+            selectedDate.getDate() === today.getDate() &&
+            selectedDate.getMonth() === today.getMonth() &&
+            selectedDate.getFullYear() === today.getFullYear()
+        ) {
+            availableDateText.textContent = "Available TODAY";
+        } else {
+            availableDateText.textContent = `Available ${formattedDate}`;
+        }
+    }
+
+    // Set the initial value based on the current date
+    updateDateText(datePicker.value);
+
+    // Add event listener to update the text when the date changes
+    datePicker.addEventListener('change', function() {
+        updateDateText(datePicker.value);
+        getAvailableAssets();
+    });
+});
+
+
 
 async function getMonthlyCounts() {
     try {
@@ -27,6 +64,79 @@ async function getMonthlyCounts() {
         console.error('Error updating item:', error);
     }
 }
+
+
+// async function getAvailableAssets() {
+//     try {
+//         const response = await fetch("/api/rentals/getavailableassets", {
+//             method: 'post',
+//             credentials: 'include', 
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             // body: JSON.stringify(updateData)
+//         });
+      
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }else{
+//             const result = await response.json();
+       
+//            console.log("Available assets",result)
+//         }
+
+       
+
+//     } catch (error) {
+//         // Handle any errors that occurred during the fetch
+//         console.error('Error updating item:', error);
+//     }
+// }
+
+async function getAvailableAssets() {
+    try {
+        const datePicker = document.getElementById('date-picker');
+        const response = await fetch("/api/rentals/getavailableassets", {
+            method: 'post',
+            credentials: 'include', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date: datePicker.value })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
+            const result = await response.json();
+           console.log("Available assets",result)
+
+            const listArea = document.querySelector('.list-area');
+            listArea.innerHTML = ''; // Clear any existing content
+
+            // Populate the list area with available assets
+            result.forEach(item => {
+                const assetButton = document.createElement('a');
+                assetButton.href = '#';
+                assetButton.className = 'btn btn-primary btn-icon-split btn-sm mb-2 mr-2'; // Added mb-2 for vertical spacing
+                
+                assetButton.innerHTML = `
+                    <span class="icon text-white-50">
+                        <i class="fas fa-flag"></i>
+                    </span>
+                    <span class="text">${item}</span>
+                `;
+
+                listArea.appendChild(assetButton);
+            });
+        }
+
+    } catch (error) {
+        // Handle any errors that occurred during the fetch
+        console.error('Error updating item:', error);
+    }
+}
+
 
 
 

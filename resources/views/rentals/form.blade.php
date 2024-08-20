@@ -33,7 +33,7 @@
                                     @forelse ($assets as $ic)
                                         <option value="{{ $ic->id }}"
                                             {{ $rental->asset_id == $ic->id ? 'selected' : '' }}>
-                                            {{ $ic->item ? $ic->item->description : '' }}</option>
+                                            ({{ $ic->code }}) {{ $ic->item ? $ic->item->description : '' }} </option>
                                     @empty
                                         <option value="">No data</option>
                                     @endforelse

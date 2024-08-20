@@ -96,9 +96,32 @@ function rowActions(data){
     </div>
         `;
 
+      
+
 
 return htmlContent;
 }
+
+function rowActions2(data){
+    const htmlContent = `
+    <div class="text-center">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        
+       
+        <label class="btn btn-secondary" >
+            <input type="radio" name="options" onclick="${data.editClick}" id="edit-${data.idSuffix}" autocomplete="off"> <i class="bi bi-pencil-square"></i>
+        </label>
+        <label class="btn btn-secondary" >
+            <input id="delete-${data.idSuffix}" onclick="${data.deleteClick}"  type="radio" name="options" autocomplete="off">
+           
+            <i id="icon-${data.id}" class="bi bi-archive-fill"></i>
+            <div id="spinner-${data.id}" class="spinner-grow spinner-grow-sm d-none" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </label>
+        </div>
+    </div>
+        `;}
 function tableLoader(){
     const htmlContent = `
          <div class="d-flex justify-content-center align-items-center">

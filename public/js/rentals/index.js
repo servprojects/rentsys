@@ -111,7 +111,7 @@ function populateTable(rentals) {
         // Return date
 
         const tdItem = document.createElement('td');
-        tdItem.textContent = rental.asset? rental.asset.item.description : '';
+        tdItem.textContent = rental.asset? rental.asset.item.description +" ("+ rental.asset.code + ")": '';
         tr.appendChild(tdItem);
 
         const tdC = document.createElement('td');

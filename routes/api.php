@@ -3,6 +3,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemGenericNameController;
+use App\Http\Controllers\LeadSourceController;
 use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
@@ -24,11 +25,16 @@ use App\Http\Controllers\ItemController;
     Route::post('/assets/all', [AssetController::class, 'getAllData']);
     Route::post('/assets/remove/{item}', [AssetController::class, 'restDisable']);
 
+    Route::post('/lead-source/all', [LeadSourceController::class, 'getAllData']);
+    Route::post('/lead-source/remove/{item}', [LeadSourceController::class, 'restDisable']);
+
+
     Route::post('/rentals/all', [RentalController::class, 'getAllData']);
     Route::post('/rentals/remove/{rental}', [RentalController::class, 'restDisable']);
     Route::post('/rentals/conflicts', [RentalController::class, 'getConflicts']);
     Route::get('/rentals/getmonthlycounts', [RentalController::class, 'getMonthlyCounts']);
     Route::get('/rentals/getcategorycounts', [RentalController::class, 'getCategoryCounts']);
     Route::get('/rentals/getadscounts', [RentalController::class, 'getAdsCounts']);
+    Route::post('/rentals/getavailableassets', [RentalController::class, 'getAvailableAssets']);
     // });
 // });

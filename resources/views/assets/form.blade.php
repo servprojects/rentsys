@@ -3,7 +3,7 @@
 @section('content')
     <div class="p-lg-5">
         <div class="card w-100 w-lg-50">
-            <form action="{{ $transactionRoute == "assets.update" ? route($transactionRoute, $itemBrand->id) : route($transactionRoute) }}" method="POST">
+            <form action="{{ $transactionRoute == "assets.update" ? route($transactionRoute, $asset->id) : route($transactionRoute) }}" method="POST">
                 @csrf
                 @if ($transactionRoute == "assets.update")
                    @method('PUT')
@@ -30,7 +30,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="code" class="form-label">code</label>
+                            <label for="code" class="form-label">Code</label>
                             <input type="text" value="{{ $asset->code ?? '' }}" name="code" class="form-control" id="code">
                             @error('code')
                                 <div class="form-text text-danger">{{ $message }}</div>

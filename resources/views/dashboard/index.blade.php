@@ -2,6 +2,7 @@
 
 @section('content')
     @include('dashboard.accumulations')
+    @include('dashboard.availability')
     @include('dashboard.revenue')
 
 

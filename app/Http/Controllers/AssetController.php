@@ -61,8 +61,9 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset):View
     {
-        $transactionRoute = 'asset.update';
-        return view('assets.form',compact('asset','transactionRoute' ));
+        $transactionRoute = 'assets.update';
+        $items = Item::all();
+        return view('assets.form',compact('asset','transactionRoute', 'items' ));
     }
 
     /**
