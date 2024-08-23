@@ -13,8 +13,6 @@ class Asset extends Model
         parent::boot();
 
         static::addGlobalScope(new ExcludeDeletedScope);
-        // $resultsWithDeleted = YourModel::withoutGlobalScope(ExcludeDeletedScope::class)->get();
-
     }
 
     use HasFactory;

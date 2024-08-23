@@ -24,7 +24,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                MASTERS
+                MANAGEMENT
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -54,6 +54,18 @@
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('lead-source.index') }}">Lead Sources</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
+                    aria-expanded="true" aria-controls="collapse4">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Administrative</span>
+                </a>
+                <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('companies.index') }}">Companies</a>
                     </div>
                 </div>
             </li>

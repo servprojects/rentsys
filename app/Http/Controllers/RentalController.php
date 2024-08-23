@@ -7,6 +7,7 @@ use App\Http\Requests\DisableRequest;
 use App\Http\Requests\RentalStoreRequest;
 use App\Models\Asset;
 use App\Models\Item;
+use App\Models\LeadSource;
 use App\Models\Rental;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -33,10 +34,11 @@ class RentalController extends Controller
     public function create(): View
     {
         $assets = Asset::all();
+        $leadSources = LeadSource::all();
         $transactionRoute = 'rentals.store';
         $rental = new Rental();
 
-        return view('rentals.form', compact('transactionRoute', 'assets', 'rental'));
+        return view('rentals.form', compact('transactionRoute', 'assets', 'rental', 'leadSources'));
     }
 
     /**

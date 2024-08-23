@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemGenericNameController;
@@ -28,6 +29,8 @@ use App\Http\Controllers\ItemController;
     Route::post('/lead-source/all', [LeadSourceController::class, 'getAllData']);
     Route::post('/lead-source/remove/{item}', [LeadSourceController::class, 'restDisable']);
 
+    Route::post('/companies/all', [CompanyController::class, 'getAllData']);
+    Route::post('/companies/remove/{company}', [CompanyController::class, 'restDisable']);
 
     Route::post('/rentals/all', [RentalController::class, 'getAllData']);
     Route::post('/rentals/remove/{rental}', [RentalController::class, 'restDisable']);

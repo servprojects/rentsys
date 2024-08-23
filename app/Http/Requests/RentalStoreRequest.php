@@ -33,6 +33,8 @@ class RentalStoreRequest extends FormRequest
             'surrendered_id' => 'nullable',
             'asset_id' => 'required',
             'client'=> 'required',
+            'lead_source_id' => 'nullable',
+            'status' => 'nullable',
 
         ];
     }

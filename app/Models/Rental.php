@@ -31,12 +31,19 @@ class Rental extends Model
         'deleted',
         'client',
         'asset_id',
+        'lead_source_id',
+        'status',
 
     ];
     
     public function asset()
     {
         return $this->belongsTo(Asset::class, 'asset_id');
+    }
+
+    public function leadSource()
+    {
+        return $this->belongsTo(LeadSource::class, 'lead_source_id');
     }
 
 }
