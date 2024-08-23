@@ -68,9 +68,9 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CompanyStoreRequest $request, Company $asset):RedirectResponse
+    public function update(CompanyStoreRequest $request, Company $company):RedirectResponse
     {
-        $asset->update($request->validated());
+        $company->update($request->validated());
           
         return redirect()->route('companies.index')
                         ->with('success','Company updated successfully');

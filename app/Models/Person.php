@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
-class Company extends Model
+class Person extends Model
 {
     use HasFactory;
 
@@ -16,29 +16,31 @@ class Company extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'name',
-        'code',
+        'first_name', 
+        'last_name', 
+        'contact_number', 
         'address',
-        'contact_number',
+        'valid_id_type',
+        'valid_id_no',
         'email',
+        'company_id',
         'deleted',
-        'country_code',
-        'region_code',
-        'municipality_code',
-        'location_coordinates',
     ];
 
     protected static function boot()
     {
         parent::boot();
 
-      
-        static::addGlobalScope(new ExcludeDeletedScope);
+        static::addGlobalScope(new ExcludeDeletedScope());
 
         static::creating(function ($model) {
             $model->id = Str::uuid();
         });
     }
 
-    
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
 }

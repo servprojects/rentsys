@@ -8,37 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
-class Company extends Model
+class Client extends Model
 {
     use HasFactory;
 
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = [
-        'name',
-        'code',
-        'address',
-        'contact_number',
-        'email',
-        'deleted',
-        'country_code',
-        'region_code',
-        'municipality_code',
-        'location_coordinates',
-    ];
+    protected $fillable = ['person_id', 'company_id', 'deleted', 'registration_date'];
 
     protected static function boot()
     {
         parent::boot();
 
-      
-        static::addGlobalScope(new ExcludeDeletedScope);
+        static::addGlobalScope(new ExcludeDeletedScope());
 
         static::creating(function ($model) {
             $model->id = Str::uuid();
         });
     }
 
-    
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class, 'person_id');
+    }
 }
