@@ -159,22 +159,25 @@
                     </div> --}}
                     <div>
                         <div class="row">
-                            <div class="col-12 col-md-6 mb-1">
+                            <div class="col-12 col-md-6 mb-3">
                                 <label for="client" class="form-label">Client</label>
-                                <input type="text" value="{{ $rental->client ?? '' }}" name="client"
-                                    class="form-control form-control-sm" id="client">
+                                <select id="client" class="form-control selectpicker" data-live-search="true" name="client">
+                                   
+                                    <!-- Add more options as needed -->
+                                </select>
                                 @error('client')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-12 col-md-6 mb-1">
                                 <label for="brand" class="form-label">Asset</label>
-                                <select name="asset_id" class="form-control form-control-sm">
+                                <select name="asset_id" class="form-control  selectpicker" data-live-search="true">
                                     <option selected>Select</option>
                                     @forelse ($assets as $ic)
                                         <option value="{{ $ic->id }}"
                                             {{ $rental->asset_id == $ic->id ? 'selected' : '' }}>
-                                            ({{ $ic->code }}) {{ $ic->item ? $ic->item->description : '' }} 
+                                            ({{ $ic->code }})
+                                            {{ $ic->item ? $ic->item->description : '' }}
                                         </option>
                                     @empty
                                         <option value="">No data</option>
@@ -189,20 +192,21 @@
                         <div class="row">
                             <div class="col-12 col-md-6 mb-3">
                                 <label for="date_of_inquiry" class="form-label">Date of Inquiry</label>
-                                <input type="datetime-local" value="{{ $rental->date_of_inquiry ?? '' }}" name="date_of_inquiry"
-                                    class="form-control form-control-sm" id="date_of_inquiry">
+                                <input type="datetime-local" value="{{ $rental->date_of_inquiry ?? '' }}"
+                                    name="date_of_inquiry" class="form-control form-control-sm" id="date_of_inquiry">
                                 @error('date_of_inquiry')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                    
+
                         <!-- First Row: Expected Pickup and Expected Return -->
                         <div class="row">
                             <div class="col-12 col-md-6 mb-3">
                                 <label for="expected_pickup_datetime" class="form-label">Expected Pickup Date/Time</label>
                                 <input type="datetime-local" value="{{ $rental->expected_pickup_datetime ?? '' }}"
-                                    name="expected_pickup_datetime" class="form-control form-control-sm" id="expected_pickup_datetime">
+                                    name="expected_pickup_datetime" class="form-control form-control-sm"
+                                    id="expected_pickup_datetime">
                                 @error('expected_pickup_datetime')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
@@ -210,19 +214,21 @@
                             <div class="col-12 col-md-6 mb-3">
                                 <label for="expected_return_datetime" class="form-label">Expected Return Date/Time</label>
                                 <input type="datetime-local" value="{{ $rental->expected_return_datetime ?? '' }}"
-                                    name="expected_return_datetime" class="form-control form-control-sm" id="expected_return_datetime">
+                                    name="expected_return_datetime" class="form-control form-control-sm"
+                                    id="expected_return_datetime">
                                 @error('expected_return_datetime')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                    
+
                         <!-- Second Row: Actual Pickup and Actual Return -->
                         <div class="row">
                             <div class="col-12 col-md-6 mb-1">
                                 <label for="actual_pickup_datetime" class="form-label">Actual Pickup Date/Time</label>
                                 <input type="datetime-local" value="{{ $rental->actual_pickup_datetime ?? '' }}"
-                                    name="actual_pickup_datetime" class="form-control form-control-sm" id="actual_pickup_datetime">
+                                    name="actual_pickup_datetime" class="form-control form-control-sm"
+                                    id="actual_pickup_datetime">
                                 @error('actual_pickup_datetime')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
@@ -230,7 +236,8 @@
                             <div class="col-12 col-md-6 mb-1">
                                 <label for="actual_return_datetime" class="form-label">Actual Return Date/Time</label>
                                 <input type="datetime-local" value="{{ $rental->actual_return_datetime ?? '' }}"
-                                    name="actual_return_datetime" class="form-control form-control-sm" id="actual_return_datetime">
+                                    name="actual_return_datetime" class="form-control form-control-sm"
+                                    id="actual_return_datetime">
                                 @error('actual_return_datetime')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
@@ -253,7 +260,7 @@
                                     @forelse ($leadSources as $ic)
                                         <option value="{{ $ic->id }}"
                                             {{ $rental->lead_source_id == $ic->id ? 'selected' : '' }}>
-                                            {{ $ic->name }} 
+                                            {{ $ic->name }}
                                         </option>
                                     @empty
                                         <option value="">No data</option>
@@ -267,22 +274,22 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select name="status" class="form-control form-control-sm">
                                     <option selected>Select</option>
-                                  
-                                        <option value="TO_FOLLOW_UP">TO FOLLOW UP</option>
-                                        <option value="FULLY_PAID">FULLY PAID</option>
-                                        <option value="INITIALLY_PAID">INITIALLY PAID</option>
-                                        <option value="CANCELLED">CANCELLED</option>
-                                        <option value="FREE">FREE</option>
-                                        <option value="FAMILY_USE">FAMILY USE</option>
-                                        <option value="UNDECIDED">UNDECIDED</option>
-                                
+
+                                    <option value="TO_FOLLOW_UP">TO FOLLOW UP</option>
+                                    <option value="FULLY_PAID">FULLY PAID</option>
+                                    <option value="INITIALLY_PAID">INITIALLY PAID</option>
+                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="FREE">FREE</option>
+                                    <option value="FAMILY_USE">FAMILY USE</option>
+                                    <option value="UNDECIDED">UNDECIDED</option>
+
                                 </select>
                                 @error('status')
                                     <div class="form-text text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                    
+
                         <div class="mb-3">
                             <div class="form-check">
                                 <input type="hidden" name="is_from_ads" value="0">
@@ -312,7 +319,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <footer>
                         <div class="d-flex justify-content-end">
                             <a href="{{ route('rentals.index') }}"><button type="button"

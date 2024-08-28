@@ -51,7 +51,7 @@
             <thead>
                 <tr>
                     @foreach ($headerItems as $item)
-                        <th class="text-nowrap p-2" width="{{ $item['width'] }}">{{ $item['title'] }}</th>
+                        <th class="text-nowrap " width="{{ $item['width'] }}">{{ $item['title'] }}</th>
                     @endforeach
                 </tr>
             </thead>

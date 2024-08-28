@@ -29,6 +29,7 @@ class PersonStoreRequest extends FormRequest
             'valid_id_type' => 'nullable',
             'valid_id_no' => 'nullable',
             'email' => 'nullable',
+            'company_id' => 'nullable',
         ];
     }
 }

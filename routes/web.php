@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
@@ -35,4 +36,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('rentals', RentalController::class);
     Route::resource('lead-source', LeadSourceController::class);
     Route::resource('companies', CompanyController::class);
+    Route::resource('clients', ClientController::class);
 });

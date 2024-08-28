@@ -45,3 +45,49 @@ document.addEventListener('DOMContentLoaded', () => {
     pickupDatetimeInput.addEventListener('change', getConflicts());
     returnDatetimeInput.addEventListener('change', getConflicts());
 });
+
+
+$(document).ready(function() {
+    // Initialize the selectpicker
+    $('#client').selectpicker();
+
+    // Function to populate the client select dropdown
+    function populateClients(search = '', page = 1) {
+        $.ajax({
+            url: `/api/clients/all?page=${page}`,
+            method: 'POST',
+            data: { search: search },
+            success: function(response) {
+                const clients = response.data;
+                const $clientSelect = $('#client');
+
+                // Clear existing options before adding new ones
+                $clientSelect.empty();
+
+                // Add new options
+                clients.forEach(function(client) {
+                    let person = client.person;
+                    let clientText = `${person.first_name} ${person.last_name}`;
+                    
+                    // Append new option with client ID as the value
+                    $clientSelect.append(new Option(clientText, client.id));
+                });
+
+                // Refresh the selectpicker
+                $clientSelect.selectpicker('refresh');
+            },
+            error: function() {
+                console.log('Error fetching clients');
+            }
+        });
+    }
+
+    // Initially populate with the first page of clients
+    populateClients();
+
+    // Handle the selectpicker search input
+    $(document).on('input', '.bs-searchbox input', function() {
+        let searchTerm = $(this).val();
+        populateClients(searchTerm);
+    });
+});

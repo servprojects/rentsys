@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ItemBrandController;
 use App\Http\Controllers\ItemCategoryController;
@@ -31,6 +32,9 @@ use App\Http\Controllers\ItemController;
 
     Route::post('/companies/all', [CompanyController::class, 'getAllData']);
     Route::post('/companies/remove/{company}', [CompanyController::class, 'restDisable']);
+
+    Route::post('/clients/all', [ClientController::class, 'getAllData']);
+    Route::post('/clients/remove/{client}', [ClientController::class, 'restDisable']);
 
     Route::post('/rentals/all', [RentalController::class, 'getAllData']);
     Route::post('/rentals/remove/{rental}', [RentalController::class, 'restDisable']);

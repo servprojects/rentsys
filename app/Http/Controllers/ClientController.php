@@ -8,8 +8,10 @@ use App\Http\Requests\PersonStoreRequest;
 use App\Models\Asset;
 use App\Models\Client;
 use App\Models\Item;
+use App\Models\Person;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ClientController extends Controller
@@ -42,10 +44,18 @@ class ClientController extends Controller
      */
     public function store(PersonStoreRequest $request):RedirectResponse
     {
-        Client::create($request->validated());
-           
-        return redirect()->route('clients.index')
-                         ->with('success', 'Client created successfully.');
+        // Validate and create a new Person record
+    $person = Person::create($request->validated());
+
+    // Create a new Client record using the newly created Person's ID
+    Client::create([
+        'person_id' => $person->id,
+        'company_id' => Auth::user()->company->id,
+        'registration_date' => $request->input('registration_date'),
+    ]);
+
+    return redirect()->route('clients.index')
+                     ->with('success', 'Client created successfully.');
     }
     
 
@@ -63,7 +73,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client):View
     {
-        $transactionRoute = 'client.update';
+        $transactionRoute = 'clients.update';
       
         return view('clients.form',compact('client','transactionRoute' ));
     }
@@ -73,10 +83,18 @@ class ClientController extends Controller
      */
     public function update(PersonStoreRequest $request, Client $client):RedirectResponse
     {
-        $client->update($request->validated());
-          
+        // $client = Client::findOrFail($client->id);
+        $client->person->update($request->validated());
+        $client->update([
+            'registration_date' => $request->input('registration_date', $client->registration_date), // Keep existing if not provided
+        ]);
+
         return redirect()->route('clients.index')
-                        ->with('success','Client updated successfully');
+                        ->with('success', 'Client and Person updated successfully.');
+        // $client->update($request->validated());
+          
+        // return redirect()->route('clients.index')
+        //                 ->with('success','Client updated successfully');
     }
 
     /**
